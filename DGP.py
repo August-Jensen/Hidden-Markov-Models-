@@ -4,11 +4,10 @@ import matplotlib.pyplot as plt
 
 class DataGeneratingProcess(object):
     """docstring for DataGeneratingProcess"""
-    def __init__(self, n_states=2, n_obs=1000, process_type="Constant", transition_matrix=None):
+    def __init__(self, n_states=3, n_obs=100, process_type="Constant", transition_matrix=None):
         self.n_states = n_states
         self.n_obs = n_obs
         self.transition_matrix = transition_matrix if transition_matrix is not None else self.initialize_transition_matrix(n_states)
-
         if isinstance(process_type, dict):
             self.parameters = self.trim_parameters_to_n_states(process_type)
         elif isinstance(process_type, str):
@@ -38,7 +37,7 @@ class DataGeneratingProcess(object):
             raise ValueError("process_type must be a string or a dictionary")
 
 
-    def initialize_transition_matrix(self, n_states):
+    def initialize_transition_matrix(self, n_states,):
         """
         Initializes the transition matrix with specified properties.
         """
@@ -47,7 +46,7 @@ class DataGeneratingProcess(object):
             matrix = np.zeros((n_states, n_states))
 
             # Fill the diagonal with values between 0.95 and 1
-            pii_values = np.random.uniform(0.99, 1, size=n_states)
+            pii_values = np.random.uniform(0.98, 1, size=n_states)
 
             np.fill_diagonal(matrix, pii_values)
 
@@ -67,7 +66,7 @@ class DataGeneratingProcess(object):
             matrix = np.zeros((n_states, n_states))
 
             # Fill the diagonal with values between 0.95 and 1
-            pii_values = np.random.uniform(0.99, 1, size=n_states)
+            pii_values = np.random.uniform(0.98, 1, size=n_states)
             np.fill_diagonal(matrix, pii_values)
 
             # Set the off-diagonal values in each column
@@ -241,3 +240,5 @@ class DataGeneratingProcess(object):
         # Print the data and its descriptive statistics
         print(data)
         print(data.describe())
+
+        return data
